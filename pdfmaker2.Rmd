@@ -1,0 +1,7 @@
+---
+output: pdf_document
+classoption: portrait
+geometry: margin=0cm
+---
+
+![](tmp.png)
