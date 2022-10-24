@@ -19,6 +19,12 @@ library(readr)
 library(dplyr)
 library(anytime)
 library(qrencoder)
+library(png)
+library(grid)
+library(here)
+
+#Run script to generate functions
+source("OMR_functions.R")
 
 #remotes::install_github('coolbutuseless/ggqr')
 #
@@ -34,9 +40,7 @@ library(qrencoder)
 
 df<-tibble(id=c(
   "8234567890",
-  "4123456789",
-  "2593710023",
-  "4234567809"))
+  "4123456789"))
 
 
 #set colours for qrcodes
@@ -51,10 +55,9 @@ for(i in 1:dim(df)[1])
   #send a file for the current record to tmp
   write_csv(df[i,],"tmp.csv")
 
-
-
   id.barcode<-qrencode_df(df$id[i])
-
+  id.num <- df$id[i]
+  
   start.date = "2022-10-08"
 
   #BUILD THE QR CODE
@@ -64,11 +67,11 @@ for(i in 1:dim(df)[1])
 
 
   #create a grid for weeks
-  wk.grid<-omr.encoder(str_remove_all(start.date,pattern = "-"),id.length = 10,show.title = F,yaxis=10,xaxis=10)
+  wk.grid<-omr.encoder(str_remove_all(start.date,pattern = "-"),id.length = 10,show.title = F,yaxis=10,xaxis=10)+theme_void()
 
   #create a grid for ID
 
-  id.grid<-omr.encoder(df$id[i],show.title=F,id.length = 10,xaxis=10,yaxis=10)+theme_void()
+  id.grid<-omr.encoder(id.num,show.title=F,id.length = 10,xaxis=10,yaxis=10)
 
 
   # Create the main figure
@@ -86,20 +89,20 @@ for(i in 1:dim(df)[1])
     ylabs = format(seq(as.Date(start.date), by = "day", length.out = 7), format="%a, %d %b"),
     x.lims = c(-130,1000),
     y.lims = c(260,h.adjust.q),
-    x.angle = 80
-
+    x.angle = 80, 
+    size = 3
   )+
-    annotate(geom = "text",x = 75,y = h.adjust.q,label="How much\nclass did you\nattend today?",angle = 0,hjust = 0.5,vjust=1,size=4,lineheight=1)+
-    annotate(geom = "text",x = 250,y = h.adjust.q,label="Did you\nhave an\nexam\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=4,lineheight=1)+
-    annotate(geom = "text",x = 430,y = h.adjust.q,label="Are you in\nyour period\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=4,lineheight=1)+
-    annotate(geom = "text",x = 610,y = h.adjust.q,label="Did you\nhave\nperiod pain\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=4,lineheight=1)+
-    annotate(geom = "text",x = 755,y = h.adjust.q,label="Did you\nhave to\ntake\npainkillers\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=4,lineheight=1)+
-    annotate(geom = "text",x = 915,y = h.adjust.q,label="How was\nyour sleep\nlast night?",angle = 0,hjust = 0.5,vjust=1,size=4,lineheight=1)+
-    annotate(geom = "text",x = -100,y = -130,label=id.num$id,angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
+    annotate(geom = "text",x = 75,y = h.adjust.q,label="How much\nclass did you\nattend today?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
+    annotate(geom = "text",x = 250,y = h.adjust.q,label="Did you\nhave an\nexam\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
+    annotate(geom = "text",x = 430,y = h.adjust.q,label="Are you in\nyour period\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
+    annotate(geom = "text",x = 610,y = h.adjust.q,label="Did you\nhave\nperiod pain\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
+    annotate(geom = "text",x = 755,y = h.adjust.q,label="Did you\nhave to\ntake\npainkillers\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
+    annotate(geom = "text",x = 915,y = h.adjust.q,label="How was\nyour sleep\nlast night?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
+    annotate(geom = "text",x = -100,y = -130,label=id.num,angle = 0,hjust = 0.5,vjust=1,size=2,lineheight=1)+ 
 
     #add lines
-    geom_vline(xintercept = c(-25,180,320,535,680,830,1000))+
-    geom_hline(yintercept = c(-20,260))
+    geom_vline(xintercept = c(-25,180,320,535,680,830,1000), size =0.25)+
+    geom_hline(yintercept = c(-20,260), size = 0.25)
 
   annotation_custom(ggplotGrob(qr), xmin = -130, xmax = -30, ymin = 20, ymax = 120)
 
@@ -108,7 +111,7 @@ for(i in 1:dim(df)[1])
   g <- rasterGrob(img, interpolate=TRUE)
 
   # get the omr marker
-  img2<-readPNG("omr_marker.png")
+  img2<-readPNG(here("OMR", "inputs", "draft_period", "omr_marker.png"))
   g2 <- rasterGrob(img2, interpolate=TRUE)
 
   #Build the form
@@ -127,7 +130,6 @@ for(i in 1:dim(df)[1])
     annotation_custom(g2, xmin=0.97, xmax=1, ymin=-1.05, ymax=1)+
     annotation_custom(ggplotGrob(wk.grid), xmin = 0.45, xmax = 0.2, ymin = -0.5, ymax = 0.75)+
     annotation_custom(ggplotGrob(id.grid), xmin = 0.7, xmax = 0.45, ymin = -0.5, ymax = 0.75)+
-
     theme_void()
 
   final

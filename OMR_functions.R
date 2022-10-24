@@ -66,9 +66,10 @@ omr.question<-function(
     y.angle = 0,
 
     x.lims= c(-30, 100),
-    y.lims= c(120, -20)
-
-
+    y.lims= c(120, -20), 
+    
+    #define size 
+    size = 2
 ){
 
   #calculate positions of boxes (x)
@@ -86,13 +87,12 @@ omr.question<-function(
 
 
   output<- ggplot(q.grid) + xlim(x.lims) + ylim(y.lims)+
-    geom_rect(aes(xmin = Var1, xmax = Var1+rec.size, ymin = Var2, ymax = Var2+rec.size),fill = "white", alpha = 1, color = "black")+
-    annotate(geom = "text",x = xpos+0.5*rec.size,y = -35,label=xlabs,angle = x.angle,hjust = 0)+
-    annotate(geom = "text",y = ypos+0.5*rec.size,x = -35,label=ylabs,angle = y.angle,hjust = 1)+
+    geom_rect(aes(xmin = Var1, xmax = Var1+rec.size, ymin = Var2, ymax = Var2+rec.size),fill = "white", alpha = 1, color = "black", size = 0.25)+
+    annotate(geom = "text",x = xpos+0.5*rec.size,y = -35,label=xlabs,angle = x.angle,hjust = 0, size = size)+
+    annotate(geom = "text",y = ypos+0.5*rec.size,x = -35,label=ylabs,angle = y.angle,hjust = 1, size = size)+
     theme(plot.margin = margin(2,2,2.5,2.2, "cm"))+
     coord_fixed()+
     theme_void()
-
 
   return(output)
 }
