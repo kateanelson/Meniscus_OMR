@@ -5,7 +5,12 @@ geometry: margin=0cm
 ---
 \centering 
 
-![](tmp.png)
+![](tmp-1.png)
+\newpage
+![](tmp-2.png)
+\newpage
+![](tmp-3.png)
+ 
 
 
 
