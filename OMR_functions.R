@@ -69,7 +69,8 @@ omr.question<-function(
     y.lims= c(120, -20), 
     
     #define size 
-    size = 2
+    size = 3
+    
 ){
 
   #calculate positions of boxes (x)
@@ -87,8 +88,8 @@ omr.question<-function(
 
 
   output<- ggplot(q.grid) + xlim(x.lims) + ylim(y.lims)+
-    geom_rect(aes(xmin = Var1, xmax = Var1+rec.size, ymin = Var2, ymax = Var2+rec.size),fill = "white", alpha = 1, color = "black", size = 0.25)+
-    annotate(geom = "text",x = xpos+0.5*rec.size,y = -35,label=xlabs,angle = x.angle,hjust = 0, size = size)+
+    geom_rect(aes(xmin = Var1, xmax = Var1+rec.size, ymin = Var2, ymax = Var2+rec.size),fill = "white", alpha = 1, color = "black")+
+    annotate(geom = "text",x = xpos+0.5*rec.size,y = -35,label=xlabs,angle = x.angle,hjust = 0, size =size )+
     annotate(geom = "text",y = ypos+0.5*rec.size,x = -35,label=ylabs,angle = y.angle,hjust = 1, size = size)+
     theme(plot.margin = margin(2,2,2.5,2.2, "cm"))+
     coord_fixed()+
@@ -98,7 +99,6 @@ omr.question<-function(
 }
 
 #Examples
-#omr.question.2(n.x = 15,n.y = 8,rec.size = 2,padding.x = 1,padding.y = 1,xlabs=c(1:15),ylabs = c(1:8))
 #omr.question.2(n.x = 3,n.y = 3,rec.size = 2,padding.x = 1,padding.y = 1,xlabs=c("Anyway you like it","B","C"),ylabs = c("Cat","Dog","Fish"))
 #omr.question.2(n.x = 3,n.y = 3,rec.size = 4,padding.x = 5,padding.y = 2,xlabs=c("Anyway you like it","B","C"),ylabs = c("Cat","Dog","Fish"))
 

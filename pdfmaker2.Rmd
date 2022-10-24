@@ -1,7 +1,11 @@
 ---
 output: pdf_document
-classoption: portrait
+classoption: landscape
 geometry: margin=0cm
 ---
+\centering 
 
 ![](tmp.png)
+
+
+

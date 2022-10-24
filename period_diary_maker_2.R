@@ -39,8 +39,7 @@ source("OMR_functions.R")
 # I also renamed the jar file for ODK briefcase because I hate whitespace
 
 df<-tibble(id=c(
-  "8234567890",
-  "4123456789"))
+  "111111"))
 
 
 #set colours for qrcodes
@@ -90,19 +89,18 @@ for(i in 1:dim(df)[1])
     x.lims = c(-130,1000),
     y.lims = c(260,h.adjust.q),
     x.angle = 80, 
-    size = 3
   )+
-    annotate(geom = "text",x = 75,y = h.adjust.q,label="How much\nclass did you\nattend today?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
-    annotate(geom = "text",x = 250,y = h.adjust.q,label="Did you\nhave an\nexam\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
-    annotate(geom = "text",x = 430,y = h.adjust.q,label="Are you in\nyour period\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
-    annotate(geom = "text",x = 610,y = h.adjust.q,label="Did you\nhave\nperiod pain\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
-    annotate(geom = "text",x = 755,y = h.adjust.q,label="Did you\nhave to\ntake\npainkillers\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
-    annotate(geom = "text",x = 915,y = h.adjust.q,label="How was\nyour sleep\nlast night?",angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+
-    annotate(geom = "text",x = -100,y = -130,label=id.num,angle = 0,hjust = 0.5,vjust=1,size=2,lineheight=1)+ 
+    annotate(geom = "text",x = 75,y = h.adjust.q,label="How much\nclass did you\nattend today?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
+    annotate(geom = "text",x = 250,y = h.adjust.q,label="Did you\nhave an\nexam\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
+    annotate(geom = "text",x = 430,y = h.adjust.q,label="Are you in\nyour period\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
+    annotate(geom = "text",x = 610,y = h.adjust.q,label="Did you\nhave\nperiod pain\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
+    annotate(geom = "text",x = 755,y = h.adjust.q,label="Did you\ntake any\npainkillers\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
+    annotate(geom = "text",x = 915,y = h.adjust.q,label="How was\nyour sleep\nlast night?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
+    annotate(geom = "text",x = -100,y = -130,label=id.num,angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+ 
 
     #add lines
-    geom_vline(xintercept = c(-25,180,320,535,680,830,1000), size =0.25)+
-    geom_hline(yintercept = c(-20,260), size = 0.25)
+    geom_vline(xintercept = c(-25,180,320,535,680,830,1000))+
+    geom_hline(yintercept = c(-20,260))
 
   annotation_custom(ggplotGrob(qr), xmin = -130, xmax = -30, ymin = 20, ymax = 120)
 
@@ -133,7 +131,7 @@ for(i in 1:dim(df)[1])
     theme_void()
 
   final
-  ggsave("tmp.png")
+  ggsave("tmp.png", width = 22.6, height = 20.5, units = "cm")
 
   #convert datetimes so that reports sort appropriately by date of submission
 
