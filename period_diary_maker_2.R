@@ -11,12 +11,7 @@
 # This work is licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License
 # http://creativecommons.org/licenses/by-sa/3.0/"
 #########################################################################################
-# Requirements
-#
-#needs latex and pandoc (external installations, use homebrew)
-library(knitr)
-library(readr)
-library(dplyr)
+# Requirement
 library(anytime)
 library(qrencoder)
 library(png)
@@ -35,17 +30,21 @@ source("OMR_functions.R")
 # any passwords with special characters will need escape characters
 # i.e. password doggy!prunes12 needs to be specified as doggy\\!prunes12
 # obviously shouldn't hardcode passwords. Better to call from the console using a readline() command but I am lazy
-# Also need to specify the targets for input and output. Here TMIH_example
+# Also need to specify the targets for input and output. Here TMIH_examples
+#
+#needs latex and pandoc (external installations, use homebrew)
+library(knitr)
+library(readr)
+library(dplyr)
 # I also renamed the jar file for ODK briefcase because I hate whitespace
 
-df<-tibble(id=c(
-  "111111"))
+
+df<-tibble(read_csv("diary_id_num.csv"))%>% 
+ mutate(id = as.character(id))
 
 
 #set colours for qrcodes
 group.colors <- c("0"="white","1"="black")
-
-
 
 
 # enter loop for each row of the csv file
@@ -68,7 +67,6 @@ for(i in 1:dim(df)[1])
     wk.grid<-omr.encoder(str_remove_all(start.date,pattern = "-"),id.length = 10,show.title = F,yaxis=10,xaxis=10)+theme_void()
     
     #create a grid for ID
-    
     id.grid<-omr.encoder(id.num,show.title=F,id.length = 10,xaxis=10,yaxis=10)
     
     
@@ -83,17 +81,17 @@ for(i in 1:dim(df)[1])
       rec.size = 24,
       padding.x = 12,
       padding.y = 12,
-      xlabs= c("All","Some","None","School Closed","No","Yes","No","Light Period","Moderate Period","Heavy Period","No","Yes","No","Yes","Good","Fair","Poor"),
+      xlabs= c("Attended all","Missed some","Missed all","No classes/Closed","No","Yes","No","Light Period","Moderate Period","Heavy Period","No","Yes","No","Yes","Good","Fair","Poor"),
       ylabs = format(seq(as.Date(start.date), by = "day", length.out = 7), format="%a, %d %b"),
       x.lims = c(-130,1000),
       y.lims = c(260,h.adjust.q),
       x.angle = 80, 
     )+
-      annotate(geom = "text",x = 75,y = h.adjust.q,label="How much\nclass did you\nattend today?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
+      annotate(geom = "text",x = 75,y = h.adjust.q,label="How many\nof your classes\n did you \nattend today?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
       annotate(geom = "text",x = 250,y = h.adjust.q,label="Did you\nhave an\nexam\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
       annotate(geom = "text",x = 430,y = h.adjust.q,label="Are you in\nyour period\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
       annotate(geom = "text",x = 610,y = h.adjust.q,label="Did you\nhave\nperiod pain\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
-      annotate(geom = "text",x = 755,y = h.adjust.q,label="Did you\ntake any\npainkillers\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
+      annotate(geom = "text",x = 755,y = h.adjust.q,label="Did you\ntake\npainkillers\ntoday?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
       annotate(geom = "text",x = 915,y = h.adjust.q,label="How was\nyour sleep\nlast night?",angle = 0,hjust = 0.5,vjust=1,size=3.5,lineheight=1)+
       annotate(geom = "text",x = -100,y = -130,label=id.num,angle = 0,hjust = 0.5,vjust=1,size=3,lineheight=1)+ 
       
@@ -137,20 +135,36 @@ for(i in 1:dim(df)[1])
   
   #loop to create tmp.png for each week of the student's diary 
   
-  start.dates<- c("2022-10-31", "2022-11-07", "2022-11-14")
+  start.dates<- c("2023-04-03", 
+                  "2023-04-10", 
+                  "2023-04-17", 
+                  "2023-04-24", 
+                  "2023-05-01", 
+                  "2023-05-08", 
+                  "2023-05-15", 
+                  "2023-05-22", 
+                  "2023-05-29", 
+                  "2023-06-05", 
+                  "2023-06-12", 
+                  "2023-06-19", 
+                  "2023-06-26", 
+                  "2023-07-03", 
+                  "2023-07-10", 
+                  "2023-07-17", 
+                  "2023-07-24",
+                  "2023-07-31", 
+                  "2023-08-07", 
+                  "2023-08-14")
   
     for(wk in 1:length(start.dates)){
      file.name = paste("tmp-", wk, ".png", sep="")
      diary.pages(start.dates[wk], file.name) 
     }  
   
-  rmarkdown::render(input = "pdfmaker2.Rmd",
+  #run RMD script to create report in pdf, pulling in any pngs
+   rmarkdown::render(input = "pdfmaker2.Rmd",
                     output_file = str_c(df[i,],".pdf"),
                     output_dir = "output/")
-
-    
-    
-  #run RMD script to create report in pdf, pulling in any jpgs
 
 }
 

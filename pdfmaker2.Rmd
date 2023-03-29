@@ -1,16 +1,157 @@
 ---
 output: pdf_document
-classoption: landscape
+classoption: portrait
 geometry: margin=0cm
+cache: TRUE
 ---
 \centering 
+![](introduction_page.png){width=90%}
 
+\newpage 
+![](instructions_page.png) 
+
+\newpage
 ![](tmp-1.png)
+
+\newpage 
+
+![](instructions_page.png) 
+
 \newpage
 ![](tmp-2.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
 \newpage
 ![](tmp-3.png)
- 
+ \newpage 
+![](instructions_page.png) 
 
 
 
+\newpage
+![](tmp-4.png)
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-5.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-6.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-7.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-8.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-9.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-10.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-11.png)
+
+
+ \newpage 
+![](instructions_page.png) 
+
+
+\newpage
+![](tmp-12.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+\newpage
+![](tmp-13.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+\newpage
+![](tmp-14.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+\newpage
+![](tmp-15.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+\newpage
+![](tmp-16.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+\newpage
+![](tmp-17.png)
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-18.png)
+
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-19.png)
+
+ \newpage 
+![](instructions_page.png) 
+
+
+
+\newpage
+![](tmp-20.png)

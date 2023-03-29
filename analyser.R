@@ -1,3 +1,4 @@
+
 ###############################################################################################################
 #Analyser
 #
@@ -13,8 +14,7 @@ library(dplyr)
 source("OMR_functions.R")
 
 
-
-df<-as.tibble(read_csv("../OMR/outputs/draft_period/Results/Results_03PM.csv",na = "")) %>%
+  df<-as.tibble(read_csv("OMR/outputs/draft_period/Results/Results_01PM.csv",na = "")) %>%
     replace(is.na(.), 0)
 
 ###################################################################################################################################
@@ -102,7 +102,7 @@ data.out <-bind_rows(data.out,q.maker(select(df,c(file_id,Q62:Q63)),q = "d4_peri
 data.out <-bind_rows(data.out,q.maker(select(df,c(file_id,Q64:Q65)),q = "d4_painkillers",a = c("No","Yes")))
 data.out <-bind_rows(data.out,q.maker(select(df,c(file_id,Q66:Q68)),q = "d4_sleep",a = c("Good","Fair","Poor")))
 
-data.out <-bind_rows(data.out,q.maker(select(df,c(file_id,Q69:Q71)),q = "d5_class",a = c("All","Some","None","School.Closed")))
+data.out <-bind_rows(data.out,q.maker(select(df,c(file_id,Q69:Q72)),q = "d5_class",a = c("All","Some","None","School.Closed")))
 data.out <-bind_rows(data.out,q.maker(select(df,c(file_id,Q73:Q74)),q = "d5_exam",a = c("No","Yes")))
 data.out <-bind_rows(data.out,q.maker(select(df,c(file_id,Q75:Q78)),q = "d5_period",a = c("No","Light.Period","Moderate.Period","Heavy.Period")))
 data.out <-bind_rows(data.out,q.maker(select(df,c(file_id,Q79:Q80)),q = "d5_period.pain",a = c("No","Yes")))
